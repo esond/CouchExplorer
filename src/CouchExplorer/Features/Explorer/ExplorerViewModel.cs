@@ -31,8 +31,8 @@ namespace CouchExplorer.Features.Explorer
             get
             {
                 var items = new List<ExplorerItemViewModel>();
-                items.AddRange(Directory.GetDirectories(CurrentPath).Select(fse => new ExplorerItemViewModel(fse)));
-                items.AddRange(Directory.GetFiles(CurrentPath).Select(fse => new ExplorerItemViewModel(fse)));
+                items.AddRange(GetVisibleDirectories());
+                items.AddRange(GetVisibleFiles());
                 return items;
             }
         }
@@ -47,6 +47,8 @@ namespace CouchExplorer.Features.Explorer
                 OnPropertyChanged();
             }
         }
+
+        #region Commands
 
         public ICommand SelectItemCommand => new RelayCommand(SelectItem);
 
@@ -72,5 +74,25 @@ namespace CouchExplorer.Features.Explorer
             CurrentPath = Path.GetDirectoryName(SelectedItem.DirectoryName);
             SelectedItem = Items.FirstOrDefault();
         }
+
+        #endregion
+
+        #region Private Helpers
+
+        private IEnumerable<ExplorerItemViewModel> GetVisibleDirectories()
+        {
+            return new DirectoryInfo(CurrentPath).GetDirectories()
+                .Where(f => !f.Attributes.HasFlag(FileAttributes.Hidden))
+                .Select(f => new ExplorerItemViewModel(f.FullName));
+        }
+
+        private IEnumerable<ExplorerItemViewModel> GetVisibleFiles()
+        {
+            return new DirectoryInfo(CurrentPath).GetFiles()
+                .Where(f => !f.Attributes.HasFlag(FileAttributes.Hidden))
+                .Select(f => new ExplorerItemViewModel(f.FullName));
+        }
+
+        #endregion
     }
 }
