@@ -7,7 +7,7 @@ using System.Windows;
 // associated with an assembly.
 [assembly: AssemblyTitle("CouchExplorer")]
 [assembly: AssemblyDescription("High-visibility file explorer.")]
-[assembly: AssemblyCompany("Eric Sondergard")]
+[assembly: AssemblyCompany("Flamtap")]
 [assembly: AssemblyProduct("CouchExplorer")]
 [assembly: AssemblyCopyright("Copyright © Eric Sondergard 2017")]
 

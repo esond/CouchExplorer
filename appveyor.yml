@@ -1,3 +1,7 @@
+artifacts:
+- path: build\pkg
+  name: CouchExplorerArtifacts
+
 before_build:
   - ps: gitversion $env:APPVEYOR_BUILD_FOLDER /l console /output buildserver /updateAssemblyInfo /nofetch /b $env:APPVEYOR_REPO_BRANCH
 
@@ -8,7 +12,7 @@ branches:
     - /release/.*/
 
 build_script:
-  - ps: ./build
+  - ps: ./build -t Full
 
 cache:
   - tools -> build.cake

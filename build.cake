@@ -1,3 +1,7 @@
+#tool "GitVersion.CommandLine"
+#tool "WiX.Toolset"
+#load "./build/version.cake"
+
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
@@ -10,7 +14,19 @@ var configuration = Argument("configuration", "Release");
 //////////////////////////////////////////////////////////////////////
 
 // Define directories.
-var buildDir = Directory("./src/CouchExplorer/bin") + Directory(configuration);
+var buildDir = Directory("build") + Directory(configuration);
+var msiDir = "./build/Release.msi";
+
+BuildVersion version;
+
+Setup(context =>
+{
+    version = BuildVersion.Calculate(Context);
+    Information("Version:      " + version.Version);
+    Information("SemVersion:   " + version.SemVersion);
+    Information("Assembly:     " + version.AssemblyVersion);
+    Information("Cake Version: " + version.CakeVersion);
+});
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -37,12 +53,59 @@ Task("Build")
     settings.SetConfiguration(configuration));
 });
 
+Task("Msi")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
+    WiXCandle(GetFiles("./*.wxs"), new CandleSettings
+    {
+        Defines = new Dictionary<string, string>
+        {
+            { "Version", version.AssemblyVersion },
+            { "Configuration", Context.Argument("configuration", "Release") }
+        },
+        Extensions = new List<string>
+        {
+            "WixUtilExtension"
+        },
+        OutputDirectory = msiDir
+    });
+
+    var objectFiles = GetFiles(msiDir + "/*.wixobj");
+
+    foreach (var objectFile in objectFiles)
+    {
+        WiXLight(msiDir + "/" + objectFile.GetFilename(), new LightSettings
+        {   
+            Extensions = new List<string>
+            {
+                "WixUtilExtension"
+            },
+            OutputFile = msiDir + "/" +
+                objectFile.GetFilenameWithoutExtension() +  version.SemVersion + ".msi"
+        });
+    }
+});
+
+Task("Arrange-Artifacts")
+    .Does(() =>
+{
+    var artifactsDir = "./build/pkg/CouchExplorer-" + version.SemVersion;
+    EnsureDirectoryExists(artifactsDir);
+
+    CopyFiles(msiDir + "/*.msi", artifactsDir);
+});
+
 //////////////////////////////////////////////////////////////////////
 // TASK TARGETS
 //////////////////////////////////////////////////////////////////////
 
 Task("Default")
     .IsDependentOn("Build");
+
+Task("Full")
+    .IsDependentOn("Msi")
+    .IsDependentOn("Arrange-Artifacts");
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION

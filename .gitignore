@@ -17,9 +17,11 @@
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+[Rr]elease.[Mm]si/
 x64/
 x86/
 bld/
+pkg/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
