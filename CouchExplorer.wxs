@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?define ProductName='mcFiddle' ?>
+<?define Manufacturer='mcThings' ?>
+<?define UpgradeCode='{8e95c04b-6d04-4e0a-8365-483a81f35e4c}' ?>
+<?define Icon='res/mcThings.ico' ?>
+
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+  <Product Id='*'
+           Name='$(var.ProductName)'
+           Language='1033'
+           Version='$(var.Version)'
+           Manufacturer='$(var.Manufacturer)'
+           UpgradeCode='$(var.UpgradeCode)'>
+
+    <Package Description='$(var.ProductName) $(var.Version)'
+             Manufacturer='$(var.Manufacturer)'
+             InstallerVersion='300'
+             Compressed='yes' />
+
+    <Upgrade Id='$(var.UpgradeCode)'>
+      <UpgradeVersion Maximum="$(var.Version)"
+                      Property="PREVIOUSVERSIONSINSTALLED"
+                      IncludeMinimum="yes"
+                      IncludeMaximum="no" />
+    </Upgrade>
+
+    <Media Id='1' Cabinet='product.cab' EmbedCab='yes' />
+
+    <Icon Id="mcThings.ico" SourceFile='$(var.Icon)' />
+    <Property Id="ARPPRODUCTICON" Value="mcThings.ico" />
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder' Name='Program Files'>
+        <Directory Id='ManufacturerFolder' Name='$(var.Manufacturer)'>
+          <Directory Id='INSTALLDIR' Name='$(var.ProductName)' FileSource='build\release'>
+            <Component Id='Binaries' Guid='{051c28f1-8e71-4238-a189-20073fe2fb47}'>
+              <!-- executables -->
+              <File Name='mcFiddle.Client.exe' />
+              <File Name='mcFiddle.Client.exe.config' />
+
+              <!-- libraries -->
+              <File Name='M2Mqtt.Net.dll' />
+              <File Name='mcThings.dll' />
+              <File Name='NLog.dll' />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id='ProgramMenuFolder'>
+        <Directory Id='ApplicationProgramsFolder' Name='$(var.ProductName)' />
+      </Directory>
+    </Directory>
+
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="StartMenuShortcut" Guid="{0cbd2167-4262-4223-ac3c-c1f088146302}">
+        <Shortcut Id="McFiddleStartMenuShortcut"
+                  Name="$(var.ProductName)"
+                  Description="mcFiddle"
+                  Target="[INSTALLDIR]mcFiddle.Client.exe"
+                  WorkingDirectory="INSTALLDIR"
+                  Icon="mcThings.ico" />
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\mcThings\$(var.ProductName)" Name="installed" Type="integer" Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <Feature Id='Complete' Level='1'>
+      <ComponentRef Id='Binaries' />
+      <ComponentRef Id='StartMenuShortcut' />
+    </Feature>
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts Before="InstallInitialize" />
+      <RemoveRegistryValues />
+      <RemoveFiles />
+      <InstallFiles />
+      <WriteRegistryValues />
+    </InstallExecuteSequence>
+  </Product>
+</Wix>
