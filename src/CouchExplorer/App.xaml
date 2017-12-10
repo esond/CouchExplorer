@@ -2,8 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CouchExplorer"
-             StartupUri="MainWindow.xaml">
+             xmlns:infrastructure="clr-namespace:CouchExplorer.Infrastructure"
+             Startup="ApplicationStartup">
     <Application.Resources>
-         
+         <ResourceDictionary>
+            <infrastructure:ViewTemplateSelector x:Key="ViewTemplateSelector"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
