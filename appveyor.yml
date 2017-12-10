@@ -1,0 +1,22 @@
+before_build:
+  - ps: gitversion $env:APPVEYOR_BUILD_FOLDER /l console /output buildserver /updateAssemblyInfo /nofetch /b $env:APPVEYOR_REPO_BRANCH
+
+branches:
+  only:
+    - develop
+    - master
+    - /release/.*/
+
+build_script:
+  - ps: ./build
+
+cache:
+  - tools -> build.cake
+
+image: Visual Studio 2017
+
+skip_branch_with_pr: true
+
+test: off
+
+version: '{build}'
