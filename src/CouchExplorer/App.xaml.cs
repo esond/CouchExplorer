@@ -19,6 +19,8 @@ namespace CouchExplorer
             var mainWindow = new MainWindow(viewModel);
 
             mainWindow.Show();
+
+            Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
 
         private void HandleUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
