@@ -1,5 +1,7 @@
 ﻿using System.Configuration;
 using System.Windows;
+using System.Windows.Threading;
+using CouchExplorer.Features.Common;
 using CouchExplorer.Features.Explorer;
 
 namespace CouchExplorer
@@ -17,6 +19,33 @@ namespace CouchExplorer
             var mainWindow = new MainWindow(viewModel);
 
             mainWindow.Show();
+        }
+
+        private void HandleUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            var viewModel = new UnhandledExceptionViewModel(e.Exception);
+            var window = new Window
+            {
+                Title = "Couch Explorer - Error",
+                Height = 400,
+                Width = 500,
+                SizeToContent = SizeToContent.Manual,
+                DataContext = viewModel,
+                Content = viewModel,
+                ContentTemplate = new DataTemplate(viewModel.GetType())
+                {
+                    VisualTree = new FrameworkElementFactory(typeof(UnhandledExceptionView))
+                }
+            };
+
+            viewModel.PropertyChanged += (propSender, args) =>
+            {
+                if (viewModel.DialogResult.HasValue)
+                    window.Close();
+            };
+
+            window.ShowDialog();
+            e.Handled = true;
         }
     }
 }
