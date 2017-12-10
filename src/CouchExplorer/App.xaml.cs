@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Windows;
 using CouchExplorer.Features.Explorer;
 
 namespace CouchExplorer
@@ -10,7 +11,10 @@ namespace CouchExplorer
     {
         private void ApplicationStartup(object sender, StartupEventArgs e)
         {
-            var mainWindow = new MainWindow(new MainViewModel(new ExplorerViewModel()));
+            var startupDir = ConfigurationManager.AppSettings["StartupDirectory"];
+
+            var viewModel = new MainViewModel(new ExplorerViewModel(startupDir));
+            var mainWindow = new MainWindow(viewModel);
 
             mainWindow.Show();
         }

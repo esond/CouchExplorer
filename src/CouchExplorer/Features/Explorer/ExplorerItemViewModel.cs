@@ -1,0 +1,17 @@
+﻿using System.IO;
+
+namespace CouchExplorer.Features.Explorer
+{
+    public class ExplorerItemViewModel
+    {
+        public ExplorerItemViewModel(string filePath) => FilePath = filePath;
+        
+        public string FilePath { get; }
+
+        public string DirectoryName => Path.GetDirectoryName(FilePath);
+
+        public string FileName => Path.GetFileName(FilePath);
+
+        public bool IsFile => Path.HasExtension(FilePath);
+    }
+}

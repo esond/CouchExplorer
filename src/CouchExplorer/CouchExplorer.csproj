@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +56,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Features\Explorer\ExplorerItemViewModel.cs" />
+    <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Infrastructure\ViewTemplateSelector.cs" />
     <Compile Include="Features\Explorer\ExplorerViewModel.cs" />
     <Compile Include="MainViewModel.cs" />
