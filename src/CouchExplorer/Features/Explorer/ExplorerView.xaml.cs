@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 
 namespace CouchExplorer.Features.Explorer
 {
@@ -12,9 +13,10 @@ namespace CouchExplorer.Features.Explorer
             InitializeComponent();
         }
 
-        private void UIElement_OnKeyUp(object sender, KeyEventArgs e)
+        private void HandleLoaded(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            Explorer.Focus();
+            Keyboard.Focus(Explorer);
         }
     }
 }
