@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace CouchExplorer.Features.Explorer
@@ -17,6 +18,7 @@ namespace CouchExplorer.Features.Explorer
         {
             Explorer.Focus();
             Keyboard.Focus(Explorer);
+            Explorer.SelectedIndex = 0;
         }
     }
 }
