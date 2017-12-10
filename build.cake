@@ -22,6 +22,13 @@ BuildVersion version;
 Setup(context =>
 {
     version = BuildVersion.Calculate(Context);
+    Information("   .-='''''''''''=-.");
+    Information("   | . . . . . . . |");
+    Information("   | .'.'.'.'.'.'. |");
+    Information("  ()_______________()");
+    Information("  ||_____COUCH_____||");
+    Information("  ||____EXPLORER___||");
+    Information("   W               W");
     Information("Version:      " + version.Version);
     Information("SemVersion:   " + version.SemVersion);
     Information("Assembly:     " + version.AssemblyVersion);
@@ -91,8 +98,10 @@ Task("Arrange-Artifacts")
     .Does(() =>
 {
     var artifactsDir = "./build/pkg/CouchExplorer-" + version.SemVersion;
-    EnsureDirectoryExists(artifactsDir);
 
+    Information("Copying build artifacts for " + version.SemVersion + " to " + artifactsDir);
+
+    EnsureDirectoryExists(artifactsDir);
     CopyFiles(msiDir + "/*.msi", artifactsDir);
 });
 
