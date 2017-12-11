@@ -26,8 +26,8 @@
 
     <Media Id='1' Cabinet='product.cab' EmbedCab='yes' />
 
-    <Icon Id="couch.ico" SourceFile='$(var.Icon)' />
-    <Property Id="ARPPRODUCTICON" Value="couch.ico" />
+    <Icon Id="couchExplorer.ico" SourceFile='$(var.Icon)' />
+    <Property Id="ARPPRODUCTICON" Value="couchExplorer.ico" />
 
     <Directory Id='TARGETDIR' Name='SourceDir'>
       <Directory Id='ProgramFilesFolder' Name='Program Files'>
@@ -37,9 +37,6 @@
               <!-- executables -->
               <File Name='CouchExplorer.exe' />
               <File Name='CouchExplorer.exe.config' />
-
-              <!-- other files -->
-              <File Name='couch.ico' />
             </Component>
           </Directory>
         </Directory>
@@ -56,9 +53,10 @@
                   Description="CouchExplorer"
                   Target="[INSTALLDIR]CouchExplorer.exe"
                   WorkingDirectory="INSTALLDIR"
-                  Icon="couch.ico" />
+                  Icon="couchExplorer.ico" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
-        <RegistryValue Root="HKCU" Key="Software\Flamtap\$(var.ProductName)" Name="installed" Type="integer" Value="1"
+        <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductName)" Name="installed"
+                       Type="integer" Value="1"
                        KeyPath="yes" />
       </Component>
     </DirectoryRef>
