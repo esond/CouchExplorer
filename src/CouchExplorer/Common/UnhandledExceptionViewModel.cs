@@ -7,7 +7,7 @@ using System.Windows.Input;
 using CouchExplorer.Infrastructure;
 using Microsoft.Win32;
 
-namespace CouchExplorer.Features.Common
+namespace CouchExplorer.Common
 {
     public class UnhandledExceptionViewModel : ViewModelBase
     {

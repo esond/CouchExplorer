@@ -51,10 +51,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Features\Common\UnhandledExceptionView.xaml.cs">
+    <Compile Include="Common\UnhandledExceptionView.xaml.cs">
       <DependentUpon>UnhandledExceptionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\Common\UnhandledExceptionViewModel.cs" />
+    <Compile Include="Common\UnhandledExceptionViewModel.cs" />
     <Compile Include="Features\Explorer\ExplorerItemViewModel.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Infrastructure\ViewTemplateSelector.cs" />
@@ -64,7 +64,7 @@
     <Compile Include="Features\Explorer\ExplorerView.xaml.cs">
       <DependentUpon>ExplorerView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Features\Common\UnhandledExceptionView.xaml">
+    <Page Include="Common\UnhandledExceptionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

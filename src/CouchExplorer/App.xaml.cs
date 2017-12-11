@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 using System.Windows;
 using System.Windows.Threading;
-using CouchExplorer.Features.Common;
+using CouchExplorer.Common;
 using CouchExplorer.Features.Explorer;
 
 namespace CouchExplorer

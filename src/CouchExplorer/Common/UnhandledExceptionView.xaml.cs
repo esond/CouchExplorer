@@ -1,4 +1,4 @@
-﻿namespace CouchExplorer.Features.Common
+﻿namespace CouchExplorer.Common
 {
     public partial class UnhandledExceptionView
     {

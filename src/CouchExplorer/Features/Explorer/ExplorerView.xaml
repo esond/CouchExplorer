@@ -11,19 +11,19 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <TextBox Grid.Row="0" Text="{Binding CurrentPath}" Focusable="False" IsEnabled="False" FontWeight="Bold"/>
+
+        <TextBox Grid.Row="0" Text="{Binding CurrentPath}" Focusable="False" IsEnabled="False" FontWeight="Bold" />
 
         <ListBox x:Name="Explorer" Grid.Row="1" SelectionMode="Single"
                  ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type explorer:ExplorerItemViewModel}">
-                    <TextBlock Text="{Binding FileName}" FontWeight="ExtraBold"/>
+                    <TextBlock Text="{Binding FileName}" FontWeight="ExtraBold" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.InputBindings>
                 <KeyBinding Key="Enter" Command="{Binding SelectItemCommand}" />
             </ListBox.InputBindings>
-            </ListBox>
+        </ListBox>
     </Grid>
 </UserControl>
