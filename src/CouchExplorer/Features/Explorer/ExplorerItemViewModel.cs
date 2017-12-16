@@ -12,6 +12,6 @@ namespace CouchExplorer.Features.Explorer
 
         public string FileName => Path.GetFileName(FilePath);
 
-        public bool IsFile => Path.HasExtension(FilePath);
+        public bool IsFile => !File.GetAttributes(FilePath).HasFlag(FileAttributes.Directory);
     }
 }
