@@ -5,6 +5,8 @@
              Loaded="HandleLoaded" FontSize="26" Margin="50, 10">
     <UserControl.InputBindings>
         <KeyBinding Key="Back" Command="{Binding GoBackCommand}" />
+        <KeyBinding Key="Left" Command="{Binding GoBackCommand}" />
+        <KeyBinding Key="Escape" Command="{Binding GoToRootCommand}" />
     </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -23,6 +25,7 @@
             </ListBox.ItemTemplate>
             <ListBox.InputBindings>
                 <KeyBinding Key="Enter" Command="{Binding SelectItemCommand}" />
+                <KeyBinding Key="Right" Command="{Binding SelectItemCommand}" />
             </ListBox.InputBindings>
         </ListBox>
     </Grid>

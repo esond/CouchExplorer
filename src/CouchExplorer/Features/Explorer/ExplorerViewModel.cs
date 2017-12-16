@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -24,6 +24,8 @@ namespace CouchExplorer.Features.Explorer
                 
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(Items));
+
+                SelectedItem = Items.FirstOrDefault();
             }
         }
 
@@ -40,7 +42,7 @@ namespace CouchExplorer.Features.Explorer
 
         public ExplorerItemViewModel SelectedItem
         {
-            get => _selectedItem ?? Items.FirstOrDefault();
+            get => _selectedItem;
             set
             {
                 _selectedItem = value; 
@@ -62,7 +64,6 @@ namespace CouchExplorer.Features.Explorer
             }
 
             CurrentPath = SelectedItem.FilePath;
-            SelectedItem = Items.FirstOrDefault();
         }
 
         public ICommand GoBackCommand => new RelayCommand(GoBack);
@@ -73,7 +74,13 @@ namespace CouchExplorer.Features.Explorer
                 return;
 
             CurrentPath = Path.GetDirectoryName(SelectedItem.DirectoryName);
-            SelectedItem = Items.FirstOrDefault();
+        }
+
+        public ICommand GoToRootCommand => new RelayCommand(GoToRoot);
+
+        private void GoToRoot()
+        {
+            CurrentPath = ConfigurationManager.AppSettings["StartupDirectory"];
         }
 
         #endregion
