@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="Common\UnhandledExceptionViewModel.cs" />
     <Compile Include="Features\Explorer\ExplorerItemViewModel.cs" />
+    <Compile Include="Features\Help\HelpDialogViewModel.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Infrastructure\ViewTemplateSelector.cs" />
     <Compile Include="Features\Explorer\ExplorerViewModel.cs" />
