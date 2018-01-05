@@ -88,8 +88,7 @@ namespace CouchExplorer.Features.Explorer
             if (SelectedItem.FileName == Path.GetPathRoot(SelectedItem.FilePath))
                 return;
 
-<<<<<<< HEAD
-            CurrentPath = Path.GetDirectoryName(SelectedItem.DirectoryName);
+            CurrentPath = Path.GetDirectoryName(CurrentPath);
         }
 
         public ICommand GoToRootCommand => new RelayCommand(GoToRoot);
@@ -97,10 +96,7 @@ namespace CouchExplorer.Features.Explorer
         private void GoToRoot()
         {
             CurrentPath = ConfigurationManager.AppSettings["StartupDirectory"];
-=======
-            CurrentPath = Path.GetDirectoryName(CurrentPath);
             SelectedItem = Items.FirstOrDefault();
->>>>>>> Display the selection history of directory items in descending order
         }
 
         #endregion
