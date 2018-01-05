@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:explorer="clr-namespace:CouchExplorer.Features.Explorer"
+             xmlns:infrastructure="clr-namespace:CouchExplorer.Infrastructure"
              Loaded="HandleLoaded" FontSize="26" Margin="50, 10">
     <UserControl.InputBindings>
         <KeyBinding Key="Back" Command="{Binding GoBackCommand}" />
@@ -13,10 +14,16 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <TextBox Grid.Row="0" Text="{Binding CurrentPath}" Focusable="False" IsEnabled="False" FontWeight="Bold" />
+        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                 Text="{Binding CurrentPath}" Focusable="False" IsEnabled="False" FontWeight="Bold" />
 
-        <ListBox x:Name="Explorer" Grid.Row="1" SelectionMode="Single"
+        <ListBox x:Name="Explorer" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" SelectionMode="Single"
                  ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type explorer:ExplorerItemViewModel}">
@@ -27,6 +34,15 @@
                 <KeyBinding Key="Enter" Command="{Binding SelectItemCommand}" />
                 <KeyBinding Key="Right" Command="{Binding SelectItemCommand}" />
             </ListBox.InputBindings>
+        </ListBox>
+
+        <ListBox x:Name="History" Grid.Row="1" Grid.Column="2"
+                 ItemsSource="{Binding HistoryItems}" IsEnabled="False">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type infrastructure:ExplorerHistoryItem}">
+                    <TextBlock Text="{Binding Name}" FontWeight="ExtraBold" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
     </Grid>
 </UserControl>

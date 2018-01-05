@@ -8,8 +8,6 @@ namespace CouchExplorer.Features.Explorer
         
         public string FilePath { get; }
 
-        public string DirectoryName => Path.GetDirectoryName(FilePath);
-
         public string FileName => Path.GetFileName(FilePath);
 
         public bool IsFile => !File.GetAttributes(FilePath).HasFlag(FileAttributes.Directory);
