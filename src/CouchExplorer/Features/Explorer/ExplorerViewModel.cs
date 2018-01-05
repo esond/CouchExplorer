@@ -10,10 +10,16 @@ namespace CouchExplorer.Features.Explorer
 {
     public class ExplorerViewModel : ViewModelBase
     {
+        private readonly IExplorerHistory _history;
+
         private string _currentPath;
         private ExplorerItemViewModel _selectedItem;
 
-        public ExplorerViewModel(string path) => CurrentPath = path;
+        public ExplorerViewModel(string path, IExplorerHistory history)
+        {
+            _history = history;
+            CurrentPath = path;
+        }
 
         public string CurrentPath
         {
@@ -26,6 +32,7 @@ namespace CouchExplorer.Features.Explorer
                 OnPropertyChanged(nameof(Items));
 
                 SelectedItem = Items.FirstOrDefault();
+                OnPropertyChanged(nameof(HistoryItems));
             }
         }
 
@@ -51,6 +58,8 @@ namespace CouchExplorer.Features.Explorer
             }
         }
 
+        public IEnumerable<ExplorerHistoryItem> HistoryItems => _history.GetHistoryForPath(CurrentPath);
+
         #region Commands
 
         public ICommand SelectItemCommand => new RelayCommand(SelectItem);
@@ -59,9 +68,15 @@ namespace CouchExplorer.Features.Explorer
         {
             if (SelectedItem.IsFile)
             {
+                _history.AddOrUpdateItem(Path.GetDirectoryName(SelectedItem.FilePath), Path.GetFileName(SelectedItem.FilePath));
+                OnPropertyChanged(nameof(HistoryItems));
+
                 Process.Start(SelectedItem.FilePath);
                 return;
             }
+
+            _history.AddOrUpdateItem(CurrentPath, SelectedItem.FileName);
+            OnPropertyChanged(nameof(HistoryItems));
 
             CurrentPath = SelectedItem.FilePath;
         }
@@ -70,10 +85,10 @@ namespace CouchExplorer.Features.Explorer
 
         private void GoBack()
         {
-            if (SelectedItem.DirectoryName == Path.GetPathRoot(SelectedItem.DirectoryName))
+            if (SelectedItem.FileName == Path.GetPathRoot(SelectedItem.FilePath))
                 return;
 
-            CurrentPath = Path.GetDirectoryName(SelectedItem.DirectoryName);
+            CurrentPath = Path.GetDirectoryName(CurrentPath);
         }
 
         public ICommand GoToRootCommand => new RelayCommand(GoToRoot);
@@ -81,6 +96,7 @@ namespace CouchExplorer.Features.Explorer
         private void GoToRoot()
         {
             CurrentPath = ConfigurationManager.AppSettings["StartupDirectory"];
+            SelectedItem = Items.FirstOrDefault();
         }
 
         #endregion
