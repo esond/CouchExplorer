@@ -37,6 +37,9 @@
               <!-- executables -->
               <File Name='CouchExplorer.exe' />
               <File Name='CouchExplorer.exe.config' />
+              
+              <!-- libraries -->
+              <File Name='Newtonsoft.Json.dll' />
             </Component>
           </Directory>
         </Directory>
