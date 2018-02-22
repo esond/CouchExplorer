@@ -21,6 +21,8 @@ namespace CouchExplorer.Features.Explorer
             CurrentPath = path;
         }
 
+        public string RootPath = ConfigurationManager.AppSettings["RootPath"];
+
         public string CurrentPath
         {
             get => _currentPath;
@@ -85,7 +87,7 @@ namespace CouchExplorer.Features.Explorer
 
         private void GoBack()
         {
-            if (SelectedItem.FileName == Path.GetPathRoot(SelectedItem.FilePath))
+            if (CurrentPath == RootPath)
                 return;
 
             CurrentPath = Path.GetDirectoryName(CurrentPath);
@@ -95,7 +97,7 @@ namespace CouchExplorer.Features.Explorer
 
         private void GoToRoot()
         {
-            CurrentPath = ConfigurationManager.AppSettings["StartupDirectory"];
+            CurrentPath = RootPath;
             SelectedItem = Items.FirstOrDefault();
         }
 
