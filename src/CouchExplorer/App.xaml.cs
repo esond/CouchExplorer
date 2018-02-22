@@ -19,7 +19,7 @@ namespace CouchExplorer
 
         private void ApplicationStartup(object sender, StartupEventArgs e)
         {
-            var startupDir = ConfigurationManager.AppSettings["StartupDirectory"];
+            var startupDir = ConfigurationManager.AppSettings["RootPath"];
 
             var historyPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
